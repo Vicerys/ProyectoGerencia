@@ -1,0 +1,161 @@
+﻿@model Gerencia.Core.Dtos.InicioSesionDto
+
+@{
+    Layout = "_Login";
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .login-wrapper {
+        min-height: 100vh;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        border: none;
+        border-radius: 8px;
+    }
+
+    .login-logo {
+        max-height: 60px;
+    }
+
+    .form-control {
+        height: 48px;
+        border-radius: 6px;
+    }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.15rem rgba(13,110,253,.15);
+        }
+
+    .btn-login {
+        height: 48px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #6c757d;
+        user-select: none;
+    }
+
+    .footer-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    .spinner-border {
+        width: 1rem;
+        height: 1rem;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center login-wrapper">
+    <div class="card login-card shadow-sm">
+        <div class="card-body p-4">
+
+            <!-- Logo -->
+            <div class="text-center mb-4">
+                <img src="~/images/logo.png" alt="Logo corporativo" class="login-logo mb-3" />
+                <h5 class="fw-semibold">Acceso al Sistema</h5>
+                <p class="text-muted mb-0">Introduzca sus credenciales</p>
+            </div>
+
+            <!-- Mensaje de error general -->
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <!-- Mensaje de bloqueo -->
+            @if (ViewBag.Bloqueado != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    Cuenta bloqueada temporalmente por múltiples intentos fallidos.
+                </div>
+            }
+
+            <form method="post" id="loginForm">
+                <form asp-action="Index">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="usuario" class="control-label"></label>
+                        <input asp-for="usuario" class="form-control" />
+                        <span asp-validation-for="usuario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contrasena" class="control-label"></label>
+                        <input asp-for="contrasena" class="form-control" />
+                        <span asp-validation-for="contrasena" class="text-danger"></span>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" value="Iniciar sesión" class="btn btn-primary btn-login" id="loginButton">
+                            <span id="buttonText">Iniciar sesión</span>
+                            <span id="loadingSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
+                        </button>
+                    </div>
+                </form>
+            </form>
+
+            <div class="text-center mt-4 footer-text">
+                © @DateTime.Now.Year - Empresa
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const toggleText = document.querySelector(".toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleText.textContent = "Ocultar";
+            } else {
+                passwordInput.type = "password";
+                toggleText.textContent = "Mostrar";
+            }
+        }
+
+        // Indicador de carga al enviar
+        document.getElementById("loginForm").addEventListener("submit", function () {
+
+            const button = document.getElementById("loginButton");
+            const spinner = document.getElementById("loadingSpinner");
+            const text = document.getElementById("buttonText");
+
+            button.disabled = true;
+            spinner.classList.remove("d-none");
+            text.textContent = "Validando...";
+        });
+    </script>
+
+}

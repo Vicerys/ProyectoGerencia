@@ -1,0 +1,20 @@
+﻿@model Gerencia.Core.Dtos.ProyectoDto
+@{
+    ViewData["Title"] = "Detalle Proyecto";
+}
+
+<h1>Detalle Producto</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">@Model.ProyectoId</dd>
+    <dt class="col-sm-3">Nombre</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+    <dt class="col-sm-3">Fecha límite</dt>
+    <dd class="col-sm-9">@Model.FechaLimite</dd>
+</dl>
+
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.ProyectoId" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>

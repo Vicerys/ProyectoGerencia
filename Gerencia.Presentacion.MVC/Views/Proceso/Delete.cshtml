@@ -1,0 +1,17 @@
+﻿@model Gerencia.Core.Dtos.ProcesoDto
+@{
+    ViewData["Title"] = "Borrar";
+}
+<h1>Confirmar borrado</h1>
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.ProcesoId)</dt>
+    <dd class="col-sm-9">@Model.ProcesoId</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Nombre)</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+</dl>
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ProcesoId" />
+    <button type="submit" class="btn btn-danger">Sí, borrar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

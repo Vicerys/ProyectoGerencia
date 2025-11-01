@@ -1,0 +1,222 @@
+﻿@model Gerencia.Core.Dtos.EmpleadoDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .section-card {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .employee-photo {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #6c757d;
+        text-transform: uppercase;
+    }
+
+    .info-value {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+
+    .crud-btn {
+        height: 45px;
+        font-weight: 500;
+    }
+
+    .search-input {
+        height: 45px;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="row g-4">
+
+        <!-- COLUMNA A -->
+        <div class="col-lg-4">
+
+            <!-- C: FOTO -->
+            <div class="card section-card shadow-sm mb-4">
+                <div class="card-body">
+                    <img src="@Model.Foto"
+                         alt="Foto empleado"
+                         class="employee-photo">
+                </div>
+            </div>
+
+            <!-- D: CONTACTO -->
+            @{/*
+				<div class="card section-card shadow-sm">
+					<div class="card-body">
+						<h6 class="fw-semibold mb-3">Información de Contacto</h6>
+
+						<div class="info-label">Email Corporativo</div>
+						<div class="info-value">
+							<a href="mailto:@Model.Email" class="text-decoration-none">
+								@Model.Email
+							</a>
+						</div>
+
+						<div class="info-label">Teléfono</div>
+						<div class="info-value">
+							<a href="tel:@Model.Telefono" class="text-decoration-none">
+								@Model.Telefono
+							</a>
+						</div>
+
+						<div class="info-label">Ubicación Oficina</div>
+						<div class="info-value">
+							@Model.Edificio
+						</div>
+
+					</div>
+				</div>
+                */
+            }
+            
+
+        </div>
+
+        <!-- COLUMNA B -->
+        <div class="col-lg-8">
+
+            <!-- E: DATOS EMPLEADO -->
+            <div class="card section-card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-4">Información General</h5>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-label">Nombre Completo</div>
+                            <div class="info-value fw-semibold">
+                                @Model.Nombre
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-label">Puesto</div>
+                            <div class="info-value">
+                                @Model.PuestoId
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-label">Ciudad</div>
+                            <div class="info-value">
+                                @Model.Ubicacion
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F: CRUD -->
+            <div class="card section-card shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-semibold mb-3">Gestión</h6>
+
+                    <div class="row g-2">
+
+                        <!-- R siempre visible (búsqueda) -->
+                        <div class="col-12">
+                            <input type="text"
+                                   class="form-control search-input"
+                                   placeholder="Buscar empleado..." />
+                        </div>
+
+                        @if (Model.PuestoId == 1)
+                        {
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-primary w-100 crud-btn">
+                                    Crear
+                                </button>
+                            </div>
+
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-warning w-100 crud-btn">
+                                    Editar
+                                </button>
+                            </div>
+
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-danger w-100 crud-btn">
+                                    Eliminar
+                                </button>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+@{
+/*
+<h1>Details</h1>
+
+<div>
+    <h4>Empleado</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PuestoId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PuestoId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ubicacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ubicacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Foto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Foto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Usuario)
+        </dd>
+        
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.EmpleadoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+*/}

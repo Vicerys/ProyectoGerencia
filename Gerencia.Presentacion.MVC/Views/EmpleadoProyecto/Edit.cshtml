@@ -1,0 +1,53 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto.EmpleadoProyectoFormViewModel
+@{
+    ViewData["Title"] = "Editar asignación";
+}
+
+<h1>Editar asignación</h1>
+
+<form asp-action="Edit"
+      asp-route-id="@Model.EmpleadoProyecto.EmpleadoProyectoId"
+      method="post"
+      id="empleadoProyectoForm"
+      data-delete-url="@Url.Action("DeleteDetalle","EmpleadoProyecto")">
+
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="EmpleadoProyecto.EmpleadoProyectoId" />
+
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label class="form-label">ID de Pedido</label>
+            <input class="form-control" value="@Model.EmpleadoProyecto.EmpleadoProyectoId" disabled />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="EmpleadoProyecto.EmpleadoId" class="form-label"></label>
+            <div class="input-group">
+                <input asp-for="EmpleadoProyecto.EmpleadoId" class="form-control" id="empleadoIdInput" />
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#empleadoLookupModal">Buscar…</button>
+            </div>
+            <div class="form-text">Empleado: <span id="empleadoNombre">@Model.EmpleadoNombre</span></div>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="EmpleadoProyecto.FechaAsignacion" class="form-label"></label>
+            <input asp-for="EmpleadoProyecto.FechaAsignacion" type="date" class="form-control" />
+        </div>
+        
+    </div>
+
+    <hr />
+
+    <partial name="_EmpleadoProyectoDetalleTable" model="Model" />
+
+    <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+<partial name="_EmpleadoLookupModal" />
+<partial name="_ProyectoLookupModal" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/empleadoProyecto.js" asp-append-version="true"></script>
+}

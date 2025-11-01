@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\1 Presentacion\Gerencia.Presentacion.Api\Gerencia.Presentacion.Api.csproj" />
+    <ProjectReference Include="..\2 Reglas de Negocio\Gerencia.ReglasdeNegocios\Gerencia.ReglasdeNegocios.csproj" />
+    <ProjectReference Include="..\3 Core\Gerencia.Core\Gerencia.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,57 @@
+﻿@{
+    /*
+<div class="modal fade"  id="productoLookupModal"
+        data-meta-url="@Url.Action("LookupMeta", "Proyecto")"
+        data-lookup-url="@Url.Action("Lookup", "Proyecto")">
+     */
+}
+
+<div class="modal fade" id="proyectoLookupModal"
+     data-meta-url="@Url.Action("LookupMeta", "Proyecto")"
+     data-lookup-url="@Url.Action("Lookup", "Proyecto")"
+     tabindex="-1" aria-hidden="true">
+
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buscar Proyecto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Filtros -->
+                <form class="row g-2 align-items-end" id="proyectoLookupForm">
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">ProyectoID</label>
+                        <input class="form-control" id="proyFiltroId" inputmode="numeric" />
+                    </div>
+                    
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">Nombre contiene</label>
+                        <input class="form-control" id="proyFiltroTerm" placeholder="Parte del nombre…" />
+                    </div>
+                    
+                    <div class="col-12 d-flex gap-2">
+                        <button type="button" class="btn btn-primary" id="proyectoDoSearch">Buscar</button>
+                        <button type="button" class="btn btn-outline-secondary" id="proyectoClear">Limpiar</button>
+                    </div>
+                </form>
+
+                <!-- Resultados -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover align-middle" id="proyectoResults">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del Proyecto</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody><!-- filas por JS --></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

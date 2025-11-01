@@ -1,0 +1,62 @@
+﻿@model Gerencia.Core.Dtos.ProcesoDto
+
+<!-- Nombre -->
+<div class="mb-3">
+    <label asp-for="Nombre" class="form-label"></label>
+    <input asp-for="Nombre" class="form-control" />
+    <span asp-validation-for="Nombre" class="text-danger"></span>
+</div>
+
+<!-- Importancia (Dropdown) -->
+<div class="mb-3">
+    <label asp-for= "ImportanciaId" class="form-label"></label>
+    <!--<select asp-for="ImportanciaId" asp-items="Model.Importancia" class="form-select"></select>-->
+    <span asp-validation-for="ImportanciaId" class="text-danger"></span>
+</div>
+
+<!-- (Proyectos) -->
+<div class="mb-3">
+    <label class="form-label">Proyecto</label><br />
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" asp-for="ProyectoId" value="1" />
+        <label class="form-check-label">Proyecto1</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" asp-for="ProyectoId" value="2" />
+        <label class="form-check-label">Proyecto2</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" asp-for="ProyectoId" value="3" />
+        <label class="form-check-label">Proyecto3</label>
+    </div>
+    <span asp-validation-for="ProyectoId" class="text-danger"></span>
+</div>
+
+<!-- Tipo de Medida (Dropdown) -->
+<div class="mb-3">
+    <label asp-for="EstadoId" class="form-label"></label>
+    <!--<select asp-for="EstadoId" asp-items="Model.Estados" class="form-select"></select>-->
+    <span asp-validation-for="EstadoId" class="text-danger"></span>
+</div>
+
+<!-- Fechas -->
+<div class="row mb-3 g-3">
+    <div class="col-md-4">
+        <label asp-for="FechaTerminoEstimada" class="form-label"></label>
+        <input asp-for="FechaTerminoEstimada" type="date" class="form-control" />
+        <span asp-validation-for="FechaTerminoEstimada" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="FechaTerminoReal" class="form-label"></label>
+        <input asp-for="FechaTerminoReal" type="date" class="form-control" />
+        <span asp-validation-for="FechaTerminoReal" class="text-danger"></span>
+    </div>
+</div>
+
+<!-- Descripción -->
+<div class="mb-3">
+    <label asp-for="Entregables" class="form-label"></label>
+    <textarea asp-for="Entregables" class="form-control" rows="4"></textarea>
+    <span asp-validation-for="Entregables" class="text-danger"></span>
+</div>
+

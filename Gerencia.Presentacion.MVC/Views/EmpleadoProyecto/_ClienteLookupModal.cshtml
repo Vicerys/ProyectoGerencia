@@ -1,0 +1,64 @@
+﻿@* Views/EmpleadoProyecto/_EmpleadoLookupModal.cshtml *@
+<div class="modal fade" id="empleadoLookupModal"
+     data-lookup-url="@Url.Action("Lookup", "Empleado")"
+     tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buscar Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Filtro -->
+                <form class="row g-2" id="empleadoLookupForm" onsubmit="return false;">
+                    <div class="col-12 col-md-9">
+                        <label for="empleadoFiltroTerm" class="form-label">ID o parte del nombre</label>
+                        <input class="form-control" id="empleadoFiltroTerm" placeholder="Ej. 123 o Juan Pérez" />
+                    </div>
+                    <div class="col-12 col-md-3 d-flex align-items-end">
+                        <button type="button" class="btn btn-primary w-100" id="empleadoDoSearch">Buscar</button>
+                    </div>
+                </form>
+
+                <!-- Resultados -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover align-middle" id="empleadoResults">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* Las filas se agregan por JS. Cada fila incluye un botón "Usar". *@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{/*
+    <div class="modal fade" id="clienteLookupModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buscar Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-2">
+                    <input class="form-control" id="clienteSearchTerm" placeholder="Nombre contiene…" />
+                    <button class="btn btn-outline-secondary" id="clienteDoSearch">Buscar</button>
+                </div>
+                <table class="table table-hover" id="clienteResults">
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Saldo</th><th>Alta</th><th>Status</th><th></th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>*/
+}

@@ -1,0 +1,48 @@
+﻿@model Gerencia.Core.Dtos.EmpleadoProyectoDto
+@{
+    ViewData["Title"] = "Eliminar asignación";
+    var lineas = Model.Detalles?.Count ?? 0;
+    
+}
+
+<h1 class="mb-3 text-danger">Eliminar asignación</h1>
+
+<div class="alert alert-warning">
+    <strong>¿Seguro que deseas eliminar esta asignación?</strong>
+    Esta acción no se puede deshacer.
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">ID de Pedido</label>
+                <input class="form-control" value="@Model.EmpleadoProyectoId" disabled />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">ID de Cliente</label>
+                <input class="form-control" value="@Model.EmpleadoId" disabled />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Nombre del Cliente</label>
+                <input class="form-control" value="@(Model.Empleado?.Nombre ?? "")" disabled />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Fecha de Alta</label>
+                <input class="form-control" value="@Model.FechaAsignacion.ToString("yyyy-MM-dd")" disabled />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Cantidad de Líneas</label>
+                <input class="form-control" value="@lineas" disabled />
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<form asp-action="Delete" asp-route-id="@Model.EmpleadoProyectoId" method="post" class="d-inline">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+</form>
+<a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>

@@ -1,0 +1,105 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto.EmpleadoProyectoIndexViewModel
+@{
+    ViewData["Title"] = "EmpleadoProyecto (Asignaciones)";
+}
+
+<div class="row g-3">
+    <div class="col-12 col-xl-3">
+        <div class="card">
+            <div class="card-header">Filtro</div>
+            <div class="card-body">
+                <form method="get" class="vstack gap-2">
+                    <input type="hidden" name="mode" value="filter" />
+                    <div>
+                        <label class="form-label">ID de la asignación</label>
+                        <input class="form-control" name="Filtro.EmpleadoProyectoId" value="@Model.Filtro.EmpleadoProyectoId" />
+                    </div>
+                    <div class="row g-2">
+                        <div class="col">
+                            <label class="form-label">ID del empleado</label>
+                            <input class="form-control" name="Filtro.EmpleadoId" value="@Model.Filtro.EmpleadoId" />
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Nombre contiene</label>
+                            <input class="form-control" name="Filtro.EmpleadoNombreLike" value="@Model.Filtro.EmpleadoNombreLike" />
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button class="btn btn-primary">Aplicar filtro</button>
+                    </div>
+                </form>
+                <form method="get" class="mt-2 d-grid">
+                    <button class="btn btn-outline-secondary">Limpiar</button>
+                </form>
+                <a class="btn btn-success mt-3 w-100" asp-action="Create">Crear asignacion</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-9">
+        <div class="card">
+            <div class="card-header">Resultados</div>
+            <div class="card-body p-0">
+                @if (!Model.Filtro.MostrarResultados)
+                {
+                    <div class="p-4 text-muted">Aplica un filtro para ver resultados.</div>
+                }
+                else
+                {
+                    <form method="get" class="m-0 p-0">
+                        <input type="hidden" name="mode" value="filter" />
+                        <!-- Conserva filtros al paginar/ordenar -->
+                        <input type="hidden" name="Filtro.EmpleadoProyectoId" value="@Model.Filtro.EmpleadoProyectoId" />
+                        <input type="hidden" name="Filtro.EmpleadoId" value="@Model.Filtro.EmpleadoId" />
+                        <input type="hidden" name="Filtro.EmpleadoNombreLike" value="@Model.Filtro.EmpleadoNombreLike" />
+                        
+                        <table class="table table-striped table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    @* sort helper *@
+                                    @{
+                                            string link(string col)
+                                            {
+                                                var dir = (Model.Filtro.SortBy == col && (Model.Filtro.SortDir ?? "asc") == "asc") ? "desc" : "asc";
+                                                return $"?mode=filter&Filtro.SortBy={col}&Filtro.SortDir={dir}" +
+                                                $"&Filtro.Page={Model.Filtro.Page}" +
+                                                $"&Filtro.EmpleadoProyectoId={Model.Filtro.EmpleadoProyectoId}" +
+                                                $"&Filtro.EmpleadoId={Model.Filtro.EmpleadoId}" +
+                                                $"&Filtro.EmpleadoNombreLike={Model.Filtro.EmpleadoNombreLike}";
+                                        }
+                                    }
+                                    <th><a href="@link("EmpleadoProyectoId")">ID de la asignación</a></th>
+                                    <th><a href="@link("empleado")">Empleado</a></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var r in Model.Items ?? Enumerable.Empty<Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto.EmpleadoProyectoIndexRowViewModel>())
+                                {
+                                    <tr>
+                                        <td>@r.EmpleadoProyectoId</td>
+                                        <td>@r.EmpleadoId - @r.EmpleadoNombre</td>
+                                        <td>@r.FechaAsignacion.ToString("yyyy-MM-dd")</td>
+                                        <td class="text-nowrap">
+                                            <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@r.EmpleadoProyectoId">Ver</a>
+                                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@r.EmpleadoProyectoId">Editar</a>
+                                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@r.EmpleadoProyectoId">Borrar</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="p-3">
+                            @if (Model.Resultados is not null)
+                            {
+                                @await Html.PartialAsync("_Pagination", Model.Resultados)
+                            }
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

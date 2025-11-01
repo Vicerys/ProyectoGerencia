@@ -1,0 +1,22 @@
+﻿@model Gerencia.Core.Dtos.ProcesoDto
+@{
+    ViewData["Title"] = "Editar";
+}
+<h1>Editar Producto</h1>
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ProyectoId" />
+
+    <div class="mb-3">
+        <label class="form-label">ID</label>
+        <input class="form-control" value="@Model.ProcesoId" disabled />
+    </div>
+
+    <partial name="_ProcesoFormBody" model="Model" />
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

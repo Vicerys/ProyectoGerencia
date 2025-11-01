@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Gerencia.Core.Dtos.ProcesoDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProyectoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImportanciaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entregables)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaTerminoEstimada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaTerminoReal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProyectoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImportanciaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entregables)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaTerminoEstimada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaTerminoReal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoId)
+            </td>
+          
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProcesoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProcesoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProcesoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

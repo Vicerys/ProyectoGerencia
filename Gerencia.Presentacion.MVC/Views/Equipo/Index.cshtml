@@ -1,0 +1,239 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.Equipo.EquipoIndexViewModel
+
+@{
+    ViewData["Title"] = "Dispositivos";
+}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .section-card {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .device-card, .apartar-card {
+        border-radius: 8px;
+        transition: transform 0.15s ease-in-out;
+        padding: 1rem;
+        background-color: #fff;
+        margin-bottom: 1.5rem;
+        border: 1px solid #dee2e6;
+    }
+
+        .device-card:hover, .apartar-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+    .device-photo {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
+
+    .multi-select-list {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .status-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    .status-ocupado {
+        background-color: #dc3545;
+    }
+
+    .status-libre {
+        background-color: #198754;
+    }
+
+    .status-mantenimiento {
+        background-color: #ffc107;
+    }
+
+    .btn-device {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .btn-apartar {
+        font-weight: 500;
+    }
+
+    .terms-box {
+        max-height: 100px;
+        overflow-y: auto;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 0.5rem;
+        background-color: #f8f9fa;
+        font-size: 0.85rem;
+    }
+
+    .filter-label {
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container-fluid py-4">
+
+    <!-- FILTROS -->
+    <div class="card section-card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                @{
+                    /*
+					<div class="col-md-3">
+					<label class="filter-label">Tipo de dispositivo</label>
+					<select class="form-select" id="filterTipo">
+					<option value="">Todos</option>
+					@foreach (var tipo in Model.TiposDispositivo)
+					{
+					<option>@tipo</option>
+					}
+					</select>
+					</div>
+                    
+                
+                <div class="col-md-3">
+                    <label class="filter-label">Actividad asignada</label>
+                    <select class="form-select" id="filterActividad">
+                        <option value="">Todos</option>
+                        @foreach (var act in Model.EquipoTareaId)
+                        {
+                            <option>@act</option>
+                        }
+                    </select>
+					</div> */
+				}
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100" id="btnAplicarFiltros">Aplicar filtros</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DISPOSITIVOS DISPONIBLES -->
+    <div class="card section-card shadow-sm mb-4">
+        <div class="card-body">
+            <h6 class="fw-semibold mb-3">Dispositivos disponibles</h6>
+
+            <form id="apartarForm">
+                <div class="multi-select-list mb-3" id="listaDisponibles">
+                    @foreach (var dispositivo in Model.Equipos.Where(e => e.DisponibilidadId == 1))
+                    {
+						<div class="form-check mb-1"
+                        @{/*data-actividad="@dispositivo.EquipoTareaId"*/
+					}
+                             data-foto="@dispositivo.Foto" data-especificaciones="@dispositivo.Especificaciones" data-nombre="@dispositivo.Nombre" data-estado="@dispositivo.DisponibilidadId" data-terminos="Terminos y Condiciones">
+                            <input class="form-check-input" type="checkbox" id="dispo-@dispositivo.EquipoId" />
+                            <label class="form-check-label" for="dispo-@dispositivo.EquipoId">
+                                <span class="status-indicator @(dispositivo.DisponibilidadId == 1 ? "status-disponible" : dispositivo.DisponibilidadId == 2 ? "status-ocupado" : "status-mantenimiento")"></span>
+                                @dispositivo.Nombre 
+                            </label>
+                        </div>
+                    }
+                </div>
+                <button type="button" class="btn btn-primary" id="btnApartarSeleccionados">Apartar seleccionado(s)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SECCION APARTAR DINAMICA -->
+    <div id="apartadoDinamico"></div>
+
+</div>
+
+<script>
+    // Aplicar filtros
+    document.getElementById("btnAplicarFiltros").addEventListener("click", function() {
+        const tipo = document.getElementById("filterTipo").value.toLowerCase();
+        const actividad = document.getElementById("filterActividad").value.toLowerCase();
+
+        document.querySelectorAll("#listaDisponibles .form-check").forEach(item => {
+            const t = item.getAttribute("data-tipo").toLowerCase();
+            const a = item.getAttribute("data-actividad").toLowerCase();
+            if((!tipo || t === tipo) && (!actividad || a === actividad)) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    });
+
+    // Generar sección de apartado dinámicamente
+    document.getElementById("btnApartarSeleccionados").addEventListener("click", function() {
+        const seleccionados = Array.from(document.querySelectorAll("#listaDisponibles input[type=checkbox]:checked"));
+        if(seleccionados.length === 0){
+            alert("Seleccione al menos un dispositivo para apartar.");
+            return;
+        }
+
+        const contenedor = document.getElementById("apartadoDinamico");
+        contenedor.innerHTML = ""; // limpiar
+
+        seleccionados.forEach((input, i) => {
+            const parent = input.closest(".form-check");
+            const nombre = parent.getAttribute("data-nombre");
+            const foto = parent.getAttribute("data-foto");
+            const especificaciones = parent.getAttribute("data-especificaciones");
+            const estado = parent.getAttribute("data-estado");
+            const terminos = parent.getAttribute("data-terminos");
+
+            const card = document.createElement("div");
+            card.classList.add("apartar-card");
+
+            card.innerHTML = `
+                <div class="row g-3 mb-3">
+                    <div class="col-md-3">
+                        <img src="${foto}" alt="${nombre}" class="device-photo"/>
+                    </div>
+                    <div class="col-md-9">
+                        <h6 class="fw-semibold">${nombre}</h6>
+                        <p class="text-muted mb-1"><strong>Especificaciones:</strong> ${especificaciones}</p>
+                        <p class="text-muted mb-1"><strong>Estado:</strong> ${estado}</p>
+                    </div>
+                </div>
+                 <div class="row g-3 mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Hasta qué hora</label>
+                        <input type="time" class="form-control" name="hora-${i}" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Actividad vinculada</label>
+                        <select class="form-select" name="actividad-${i}" required>
+                            <option value="">Seleccione actividad</option>
+                            ${Model.ActividadesDisponibles.Select(a => <option value="${a.Id}">${a.Nombre}</option>).Aggregate((x,y)=>x+y)}
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label">Términos y condiciones</label>
+                        <div class="terms-box">${terminos}</div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="button" class="btn btn-primary btn-apartar" onclick="confirmarApartar('${nombre}')">Apartar</button>
+                </div>
+            `;
+            contenedor.appendChild(card);
+        });
+
+        // Desmarcar los checkboxes
+        seleccionados.forEach(cb => cb.checked = false);
+    });
+
+    function confirmarApartar(nombre) {
+        return confirm(¿Desea apartar el dispositivo "${nombre}"?);
+    }
+</script>
