@@ -1,0 +1,15 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.Proyecto.ProyectoFormViewModel
+
+<div class="mb-3">
+    <label asp-for="Proyecto.Nombre" class="form-label"></label>
+    <input asp-for="Proyecto.Nombre" class="form-control" />
+    <span asp-validation-for="Proyecto.Nombre" class="text-danger"></span>
+</div>
+
+<div class="row mb-3 g-3">
+    <div class="col-md-4">
+        <label asp-for="Proyecto.FechaLimite" class="form-label"></label>
+        <input asp-for="Proyecto.FechaLimite" type="date" class="form-control" />
+        <span asp-validation-for="Proyecto.FechaLimite" class="text-danger"></span>
+    </div>
+</div>

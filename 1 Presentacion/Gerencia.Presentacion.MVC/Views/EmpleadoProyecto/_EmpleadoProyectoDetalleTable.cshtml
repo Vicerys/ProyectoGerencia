@@ -1,0 +1,61 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto.EmpleadoProyectoFormViewModel
+
+<div class="d-flex justify-content-between align-items-center">
+    <h5 class="m-0">Líneas</h5>
+    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#productoLookupModal">Agregar línea</button>
+</div>
+
+<table class="table table-sm align-middle mt-2" id="detTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>ID Asignación</th>
+            <th>Fecha de asignación { get; set; }</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < (Model.Detalles?.Count ?? 0); i++)
+        {
+            var det = Model.Detalles?[i];
+            <tr data-persisted="true"
+                data-pedido-id="@Model.EmpleadoProyecto.EmpleadoProyectoId">
+                <td class="row-index">@(i + 1)</td>
+                <td><input class="form-control form-control-sm" name="Detalles[@i].EmpleadoProyectoId" value="@det?.EmpleadoProyectoId" /></td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger del-line" title="Eliminar">✕</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+    @{
+    /*
+    <tbody>
+        @for (int i = 0; i < (Model.Detalles?.Count ?? 0); i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td><input class="form-control form-control-sm" name="Detalles[@i].ProductoID" value="@Model.Detalles?[i].ProductoID" /></td>
+                <td><input class="form-control form-control-sm" name="Detalles[@i].ProductoDescripcion" value="@Model.Detalles?[i].ProductoDescripcion" /></td>
+                <td><input class="form-control form-control-sm text-end qty" name="Detalles[@i].Cantidad" value="@Model.Detalles?[i].Cantidad" /></td>
+                <td><input class="form-control form-control-sm text-end price" name="Detalles[@i].PrecioUnitario" value="@Model.Detalles?[i].PrecioUnitario" /></td>
+                <td><input class="form-control form-control-sm text-end line-subtotal" name="Detalles[@i].Subtotal" value="@Model.Detalles?[i].Subtotal" readonly /></td>
+                <td><button type="button" class="btn btn-sm btn-outline-danger del-line">✕</button></td>
+            </tr>
+        }
+    </tbody>
+    */
+    }
+</table>
+
+<!-- plantilla oculta para nuevas líneas -->
+<table class="d-none">
+    <tbody id="detRowTpl">
+        <tr>
+            <td class="row-index"></td>
+            <td><input class="form-control form-control-sm" name="__IDX__.EmpleadoProyectoId" /></td>
+            <td><input class="form-control form-control-sm" name="__IDX__.EmpleadoProyectoFechaAsignacion" />
+            <td><button type="button" class="btn btn-sm btn-outline-danger del-line">✕</button></td>
+        </tr>
+    </tbody>
+</table>

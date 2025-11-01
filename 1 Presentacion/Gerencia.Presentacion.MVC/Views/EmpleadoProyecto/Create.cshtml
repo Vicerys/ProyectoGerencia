@@ -1,0 +1,103 @@
+﻿@using Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto
+@model EmpleadoProyectoFormViewModel
+
+@{
+    ViewData["Title"] = "Asignar empleado a proyecto";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post" id="pedidoForm">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label class="form-label">ID Empleado</label>
+            <div class="input-group">
+                <input asp-for="EmpleadoProyecto.EmpleadoId" class="form-control" />
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#empleadoModal">
+                    Buscar…
+                </button>
+            </div>
+            <span class="form-text">Empleado: <strong>@Model.EmpleadoNombre</strong></span>
+            <span asp-validation-for="EmpleadoProyecto.EmpleadoId" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Fecha de la asignación</label>
+            <input asp-for="EmpleadoProyecto.FechaAsignacion" type="date" class="form-control" />
+            <span asp-validation-for="EmpleadoProyecto.FechaAsignacion" class="text-danger"></span>
+        </div>
+    </div>
+
+    <hr />
+
+    <fieldset class="border rounded p-3">
+        <legend class="float-none w-auto px-2">Agregar proyecto</legend>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#proyectoModal">
+                Buscar proyecto…
+            </button>
+            <div class="vr"></div>
+            <div class="row g-2 align-items-end">
+                <div class="col-auto">
+                    <label class="form-label">ProyectoId</label>
+                    <input name="nuevoProyectoId" class="form-control" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" name="command" value="AddLine" class="btn btn-outline-primary">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="table-responsive mt-3">
+        <table class="table" id="detTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID Proyecto</th>
+                    <th>Fecha límite</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Detalles.Count; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td><input asp-for="Detalles[i].EmpleadoProyectoId" class="form-control" /></td>
+                        <td class="text-nowrap">
+                            <button type="submit" name="removeIndex" value="@i" class="btn btn-sm btn-outline-danger">Quitar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                
+            </tfoot>
+
+        </table>
+    </div>
+
+    <div class="mt-3 d-flex gap-2">
+        <button type="submit" name="command" value="Save" class="btn btn-success">Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+
+    <partial name="_EmpleadoLookupModal" model="Model" />
+    <partial name="_ProyectoLookupModal" model="Model" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/pedido-calc.js"></script>
+    @if (Model.ShowEmpleadoModal)
+    {
+        <script>document.addEventListener('DOMContentLoaded',()=>new bootstrap.Modal('#clienteModal').show());</script>
+    }
+    @if (Model.ShowProyectoModal)
+    {
+        <script>document.addEventListener('DOMContentLoaded',()=>new bootstrap.Modal('#productoModal').show());</script>
+    }
+}

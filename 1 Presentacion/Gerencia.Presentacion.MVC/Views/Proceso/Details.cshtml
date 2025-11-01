@@ -1,0 +1,15 @@
+﻿@model Gerencia.Presentacion.MVC.Models.Proceso
+@{
+    ViewData["Title"] = "Detalle";
+}
+<h1>Detalle de Producto</h1>
+<dl class="row">
+    <dt class="col-sm-3">Importancia</dt>
+    <dd class="col-sm-9">@Model.Importancia?.Nombre</dd>
+    <dt class="col-sm-3">Estado</dt>
+    <dd class="col-sm-9">@Model.Estado?.Nombre</dd>
+</dl>
+<p>
+    <a class="btn btn-secondary" asp-action="Index">Volver</a>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ProcesoId">Editar</a>
+</p>

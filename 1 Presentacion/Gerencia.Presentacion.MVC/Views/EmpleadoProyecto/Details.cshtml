@@ -1,0 +1,22 @@
+﻿@model Gerencia.Presentacion.MVC.Models.EmpleadoProyecto
+@{
+    ViewData["Title"] = "Detalle de la asignación";
+    var lineas = Model.Detalles?.Count ?? 0;
+}
+<h1>Detalle de la asignación</h1>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID Asignación</dt>
+            <dd class="col-sm-9">@Model.EmpleadoProyectoId</dd>
+            <dt class="col-sm-3">Empleado</dt>
+            <dd class="col-sm-9">@Model.Empleado?.Nombre (@Model.EmpleadoId)</dd>
+            <dt class="col-sm-3">Fecha de asignación</dt>
+            <dd class="col-sm-9">@Model.FechaAsignacion:yyyy-MM-dd</dd>
+        </dl>
+    </div>
+</div>
+<div class="mt-3 d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.EmpleadoProyectoId" class="btn btn-primary">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+</div>

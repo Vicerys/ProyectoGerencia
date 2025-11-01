@@ -1,0 +1,60 @@
+﻿@using Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto
+@model EmpleadoProyectoFormViewModel
+
+<div class="modal fade" id="proyectoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buscar Proyecto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-2">
+                    <div class="col-md-2">
+                        <label class="form-label">ProyectoId</label>
+                        <input asp-for="FiltroProyectoId" class="form-control" />
+                    </div>
+                    
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" name="command" value="BuscarProyecto" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover" id="proyectoResults">
+                        <thead>
+                            <tr>
+                                <th>ProyectoId</th>
+                                <th>Nombre del Proyecto</th>
+                                <th>Fecha límite</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var x in Model.ProyectoResultados)
+                            {
+                                <tr>
+                                    <td>@x.ProyectoID</td>
+                                    <td>@x.Nombre</td>
+                                    <td>@x.FechaLimite</td>
+                                    <td class="text-nowrap">
+                                        <button type="submit" name="selectProyectoId" value="@x.ProyectoID" class="btn btn-sm btn-success" data-bs-dismiss="modal">Agregar</button>
+                                    </td>
+                                </tr>
+                            }
+                            @if (!Model.ProyectoResultados.Any())
+                            {
+                                <tr><td colspan="6" class="text-muted">Sin resultados.</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

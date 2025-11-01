@@ -1,0 +1,61 @@
+﻿@using Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto
+@model EmpleadoProyectoFormViewModel
+
+<div class="modal fade" id="clienteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buscar Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <label class="form-label">EmpleadoId</label>
+                        <input asp-for="FiltroEmpleadoId" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre contiene</label>
+                        <input asp-for="FiltroEmpleadoNombre" class="form-control" />
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" name="command" value="BuscarEmpleado" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Empleado ID</th>
+                                <th>Nombre</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in Model.EmpleadoResultados)
+                            {
+                                <tr>
+                                    <td>@c.EmpleadoId</td>
+                                    <td>@c.Nombre</td>
+                                    <td class="text-nowrap">
+                                        <button type="submit" name="selectEmpleadoId" value="@c.EmpleadoId" class="btn btn-sm btn-success" data-bs-dismiss="modal">Usar</button>
+                                    </td>
+                                </tr>
+                            }
+                            @if (!Model.EmpleadoResultados.Any())
+                            {
+                                <tr><td colspan="6" class="text-muted">Sin resultados.</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

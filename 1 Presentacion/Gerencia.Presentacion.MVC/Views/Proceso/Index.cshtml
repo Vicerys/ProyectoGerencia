@@ -1,0 +1,311 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.Proceso.ProcesoIndexViewModel
+@using Gerencia.Presentacion.MVC.Models.ViewModels
+@using Gerencia.Presentacion.MVC.Models.ViewModels.Proceso
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row g-3">
+    <!-- Filtro -->
+    <div class="col-12 col-xl-3">
+        <div class="card">
+            <div class="card-header">Filtro</div>
+            <div class="card-body">
+                <form method="get" class="vstack gap-3">
+                    <input type="hidden" name="mode" value="filter" />
+
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <label asp-for="Filtro.ProcesoID" class="form-label"></label>
+                            <input asp-for="Filtro.ProcesoID" class="form-control" />
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="Filtro.NombreLike" class="form-label"></label>
+                            <input asp-for="Filtro.NombreLike" class="form-control" placeholder="Contiene…" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label asp-for="Filtro.ImportanciaId" class="form-label"></label>
+                        <select asp-for="Filtro.ImportanciaId" asp-items="Model.Filtro.Importancia" class="form-select">
+                            <option value="">(Todas)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox"
+                               id="aplicaFin"
+                               onchange="document.getElementById('finVal').disabled=!this.checked;"
+                               @(Model.Filtro.Finalizado.HasValue ? "checked" : null) />
+                        <label class="form-check-label" for="aplicaFin">Aplicar Finalizado</label>
+                    </div>
+                    <div>
+                        <input id="finVal" name="Filtro.Finalizado" type="checkbox" class="form-check-input"
+                               value="true"
+                               @(Model.Filtro.Finalizado == true ? "checked" : null)
+                               @(Model.Filtro.Finalizado.HasValue ? null : "disabled") />
+                        <label class="form-check-label" for="finVal">Sólo finalizados</label>
+                    </div>
+
+
+                    <div>
+                        <label class="form-label d-block">Dispositivos</label>
+                        @foreach (var dispositivo in new[] { 1, 2, 3 })
+                        {
+                            var selected = Model.Filtro.Dispositivos.Contains((byte)dispositivo);
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="Filtro.Dispositivos" value="@dispositivo" @(selected ? "checked" : null) />
+                                <label class="form-check-label">@($"dispositivo: {dispositivo}")</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div>
+                        <label class="form-label d-block">Empaque</label>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                                   id="Proyecto1Chk"
+                                   name="Filtro.Proyecto1" value="true"
+                                   @(Model.Filtro.Proyecto1 == true ? "checked" : null) />
+                            <label class="form-check-label" for="Proyecto1Chk">Proyecto1</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="Proyecto2Chk"
+                                   name="Filtro.Proyecto2" value="true"
+                                   @(Model.Filtro.Proyecto2 == true ? "checked" : null) />
+                            <label class="form-check-label" for="Proyecto2Chk">Proyecto2</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                                   id="Proyecto3Chk"
+                                   name="Filtro.Proyecto3" value="true"
+                                   @(Model.Filtro.Proyecto3 == true ? "checked" : null) />
+                            <label class="form-check-label" for="Proyecto3Chk">Proyecto3</label>
+                        </div>
+                    </div>
+
+                    @{
+                        /*
+                        <div>
+                        <label class="form-label d-block">Empaque</label>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" asp-for="Filtro.EnEmpaque" />
+                        <label class="form-check-label" asp-for="Filtro.EnEmpaque"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" asp-for="Filtro.EnCaja" />
+                        <label class="form-check-label" asp-for="Filtro.EnCaja"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" asp-for="Filtro.EnTarima" />
+                        <label class="form-check-label" asp-for="Filtro.EnTarima"></label>
+                        </div>
+                        </div>
+                        */
+                    }
+
+                    <div>
+                        <label class="form-label d-block">Rango de Fecha</label>
+                        <div class="mb-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="Filtro.FechaTarget" value="None"
+                                       @(Model.Filtro.FechaTarget == DateTarget.None ? "checked" : null) />
+                                <label class="form-check-label">Ninguna</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="Filtro.FechaTarget" value="FechaEstimada"
+                                       @(Model.Filtro.FechaTarget == DateTarget.FechaEstimada ? "checked" : null) />
+                                <label class="form-check-label">Fecha de Termino Estimada</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="Filtro.FechaTarget" value="FechaReal"
+                                       @(Model.Filtro.FechaTarget == DateTarget.FechaReal ? "checked" : null) />
+                                <label class="form-check-label">Fecha de Termino Real</label>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col">
+                                <label asp-for="Filtro.FechaDesde" class="form-label"></label>
+                                <input asp-for="Filtro.FechaDesde" type="date" class="form-control" />
+                            </div>
+                            <div class="col">
+                                <label asp-for="Filtro.FechaHasta" class="form-label"></label>
+                                <input asp-for="Filtro.FechaHasta" type="date" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Status</label>
+                        <select asp-for="Filtro.ProcesoStatus" asp-items="Model.Filtro.Statuses" class="form-select" multiple size="3"></select>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Aplicar Filtro</button>
+                    </div>
+                </form>
+
+                <form method="get" class="mt-2 d-grid">
+                    <input type="hidden" name="mode" value="all" />
+                    <button class="btn btn-outline-secondary">Mostrar todos</button>
+                </form>
+
+                <a class="btn btn-success mt-3 w-100" asp-action="Create">Crear</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="col-12 col-xl-9">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Resultados (@Model.Resultados?.TotalCount ?? 0)</span>
+            </div>
+            <div class="card-body p-0">
+                <form method="get" class="m-0 p-0">
+                    <input type="hidden" name="mode" value="filter" />
+                    <!-- Hiddens para conservar filtros al paginar -->
+                    <input type="hidden" name="Filtro.ProcesoID" value="@(Model.Filtro.ProcesoID)" />
+                    <input type="hidden" name="Filtro.NombreLike" value="@(Model.Filtro.NombreLike)" />
+                    <input type="hidden" name="Filtro.ImportanciaId" value="@(Model.Filtro.ImportanciaId)" />
+                    @if (Model.Filtro.Finalizado.HasValue)
+                    {
+                        <input type="hidden" name="Filtro.Finalizado" value="@(Model.Filtro.Finalizado.Value ? "true" : "false")" />
+                    }
+              
+                    <input type="hidden" name="Filtro.FechaTarget" value="@Model.Filtro.FechaTarget" />
+                    <input type="hidden" name="Filtro.FechaDesde" value="@(Model.Filtro.FechaDesde?.ToString("yyyy-MM-dd"))" />
+                    <input type="hidden" name="Filtro.FechaHasta" value="@(Model.Filtro.FechaHasta?.ToString("yyyy-MM-dd"))" />
+                    @foreach (var dispositivo in Model.Filtro.Dispositivos)
+                    {
+                        <input type="hidden" name="Filtro.Dispositivos" value="@dispositivo" />
+                    }
+                    
+                    @foreach (var s in Model.Filtro.ProcesoStatus)
+                    {
+                        <input type="hidden" name="Filtro.StatusCodigos" value="@s" />
+                    }
+
+                    <table class="table table-striped table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Importancia</th>
+                                <th>Dispositivos</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Resultados is not null)
+                            {
+                                foreach (var p in Model.Resultados)
+                                {
+                                    <tr>
+                                        <td>@p.ProcesoId</td>
+                                        <td>@p.Nombre</td>
+                                        <td>@p.Importancia?.Nombre</td>
+                                        @{/*<td>@((byte)p.Dispositivos)%</td>*/}
+                                        <td>@p.Estado?.Nombre (@p.Estado)</td>
+                                        <td class="text-nowrap">
+                                            <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@p.ProcesoId">Consultar</a>
+                                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@p.ProcesoId">Editar</a>
+                                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@p.ProcesoId">Borrar</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="p-3">
+                        @if (Model.Resultados is not null)
+                        {
+                            @await Html.PartialAsync("_Pagination", Model.Resultados)
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{/*
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProyectoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImportanciaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entregables)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaTerminoEstimada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaTerminoReal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Finalizado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProyectoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImportanciaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entregables)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaTerminoEstimada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaTerminoReal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Finalizado)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProcesoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProcesoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProcesoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*/}

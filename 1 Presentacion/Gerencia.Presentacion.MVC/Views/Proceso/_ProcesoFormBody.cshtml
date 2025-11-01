@@ -1,0 +1,81 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.ProcesoFormViewModel
+
+<!-- Nombre -->
+<div class="mb-3">
+    <label asp-for="Proceso.Nombre" class="form-label"></label>
+    <input asp-for="Proceso.Nombre" class="form-control" />
+    <span asp-validation-for="Proceso.Nombre" class="text-danger"></span>
+</div>
+
+<!-- Importancia (Dropdown) -->
+<div class="mb-3">
+    <label asp-for= "Proceso.ImportanciaId" class="form-label"></label>
+    <select asp-for="Proceso.ImportanciaId" asp-items="Model.Importancias" class="form-select"></select>
+    <span asp-validation-for="Proceso.ImportanciaId" class="text-danger"></span>
+</div>
+
+<!-- Finalizado (Switch) -->
+<div class="form-check form-switch mb-3">
+    <input asp-for="Proceso.Finalizado" class="form-check-input" type="checkbox" />
+    <label asp-for="Proceso.Finalizado" class="form-check-label"></label>
+</div>
+
+<!-- (Proyectos) -->
+<div class="mb-3">
+    <label class="form-label">Proyecto</label><br />
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" asp-for="Proceso.ProyectoId" value="1" />
+        <label class="form-check-label">Proyecto1</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" asp-for="Proceso.ProyectoId" value="2" />
+        <label class="form-check-label">Proyecto2</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" asp-for="Proceso.ProyectoId" value="3" />
+        <label class="form-check-label">Proyecto3</label>
+    </div>
+    <span asp-validation-for="Proceso.ProyectoId" class="text-danger"></span>
+</div>
+
+<!-- Presentación (Checkboxes) -->
+<div class="mb-3">
+    <div class="form-check form-check-inline">
+        <!--input asp-for="" class="form-check-input" /-->
+        <!--label-- asp-for="EnEmpaque" class="form-check-label"></!--label-->
+    </div>
+    <div class="form-check form-check-inline">
+        <!--input asp-for="EnCaja" class="form-check-input" /-->
+        <!--label asp-for="EnCaja" class="form-check-label"></label-->
+    </div>
+</div>
+
+
+<!-- Tipo de Medida (Dropdown) -->
+<div class="mb-3">
+    <label asp-for="Proceso.EstadoId" class="form-label"></label>
+    <select asp-for="Proceso.EstadoId" asp-items="Model.Estados" class="form-select"></select>
+    <span asp-validation-for="Proceso.EstadoId" class="text-danger"></span>
+</div>
+
+<!-- Fechas -->
+<div class="row mb-3 g-3">
+    <div class="col-md-4">
+        <label asp-for="Proceso.FechaTerminoEstimada" class="form-label"></label>
+        <input asp-for="Proceso.FechaTerminoEstimada" type="date" class="form-control" />
+        <span asp-validation-for="Proceso.FechaTerminoEstimada" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Proceso.FechaTerminoReal" class="form-label"></label>
+        <input asp-for="Proceso.FechaTerminoReal" type="date" class="form-control" />
+        <span asp-validation-for="Proceso.FechaTerminoReal" class="text-danger"></span>
+    </div>
+</div>
+
+<!-- Descripción -->
+<div class="mb-3">
+    <label asp-for="Proceso.Entregables" class="form-label"></label>
+    <textarea asp-for="Proceso.Entregables" class="form-control" rows="4"></textarea>
+    <span asp-validation-for="Proceso.Entregables" class="text-danger"></span>
+</div>
+

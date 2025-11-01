@@ -1,0 +1,97 @@
+﻿@using Gerencia.Presentacion.MVC.Models
+@using Gerencia.Presentacion.MVC.Models.ViewModels.EmpleadoProyecto
+@model EmpleadoProyectoIndexViewModel
+
+@{
+    ViewData["Title"] = "Asignaciones Empleado-Proyecto";
+
+    //Evita warnings de nulabilidad
+    var resultados = (IEnumerable<EmpleadoProyecto>)(Model?.Resultados ?? Enumerable.Empty<EmpleadoProyecto>());
+    bool HasResults = resultados.Any();
+}
+
+
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<form asp-action="Index" method="get" class="card mb-3">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-12 col-md-2">
+                <label class="form-label">Asignación ID</label>
+                <input asp-for="EmpleadoProyectoID" class="form-control" />
+            </div>
+
+            <div class="col-12 col-md-2">
+                <label class="form-label">Empleado ID</label>
+                <input asp-for="EmpleadoID" class="form-control" />
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label">Nombre de Cliente contiene</label>
+                <input asp-for="EmpleadoNombre" class="form-control" />
+            </div>
+
+            <div class="col-12 col-md-2">
+                <label class="form-label">Fecha desde</label>
+                <input asp-for="FechaDesde" type="date" class="form-control" />
+            </div>
+
+            <div class="col-12 col-md-2">
+                <label class="form-label">Fecha hasta</label>
+                <input asp-for="FechaHasta" type="date" class="form-control" />
+            </div>
+
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Aplicar filtro</button>
+                <a asp-action="Index" asp-route-showAll="1" class="btn btn-outline-secondary">Mostrar todos</a>
+                <button type="reset" class="btn btn-outline-dark">Limpiar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="text-muted">
+        @(HasResults ? $"{resultados.Count()} registro(s)" : "Sin resultados")
+    </div>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Pedido</a>
+</div>
+
+@if (HasResults)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ID Asignación</th>
+                    <th>ID Empleado</th>
+                    <th>Empleado</th>
+                    <th>Fecha de asignación</th>
+                    <th class="text-nowrap"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in resultados)
+                {
+                    <tr>
+                        <td>@p.EmpleadoProyectoId</td>
+                        <td>@p.EmpleadoId</td>
+                        <td>@p.Empleado?.Nombre</td>
+                        <td>@p.FechaAsignacion.ToString("yyyy-MM-dd")</td>
+                        <td class="text-nowrap">
+                            <a asp-action="Edit" asp-route-id="@p.EmpleadoProyectoId" class="btn btn-sm btn-outline-primary">Editar</a>
+                            <a asp-action="Details" asp-route-id="@p.EmpleadoProyectoId" class="btn btn-sm btn-outline-secondary">Detalles</a>
+                            <a asp-action="Delete" asp-route-id="@p.EmpleadoProyectoId" class="btn btn-sm btn-outline-danger">Borrar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        Aplica el filtro para ver pedidos. También puedes usar <a asp-action="Index">Mostrar todos</a>.
+    </div>
+}

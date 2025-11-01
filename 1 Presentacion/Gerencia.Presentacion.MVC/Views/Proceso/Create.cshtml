@@ -1,0 +1,23 @@
+﻿@model Gerencia.Presentacion.MVC.Models.ViewModels.ProcesoFormViewModel
+@{
+    ViewData["Title"] = "Crear";
+}
+<h1>Crear Producto</h1>
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="Proceso.ProcesoId" class="form-label"></label>
+        <input asp-for="Proceso.ProcesoId" class="form-control" value="0" />
+        <div class="form-text">Deja 0 para autogenerar.</div>
+        <span asp-validation-for="Proceso.ProcesoId" class="text-danger"></span>
+    </div>
+
+    <partial name="_ProcesoFormBody" model="Model" />
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

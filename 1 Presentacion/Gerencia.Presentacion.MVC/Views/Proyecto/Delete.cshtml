@@ -1,0 +1,19 @@
+﻿@model Gerencia.Presentacion.MVC.Models.Proyecto
+@{
+    ViewData["Title"] = "Borrar Proyecto";
+}
+
+<h1>Confirmar borrado</h1>
+
+<div class="alert alert-warning">
+    ¿Seguro que deseas borrar el proyecto <strong>@Model.Nombre</strong> (ID: @Model.ProyectoId)?
+</div>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ProyectoId" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Borrar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

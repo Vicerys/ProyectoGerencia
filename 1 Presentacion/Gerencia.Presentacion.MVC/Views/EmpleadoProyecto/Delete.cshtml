@@ -1,0 +1,25 @@
+﻿using Gerencia.Presentacion.MVC.Models;
+@model Gerencia.Presentacion.MVC.Models.EmpleadoProyecto
+@{
+    ViewData["Title"] = "Eliminar asignación";
+    var lineas = Model.Detalles?.Count ?? 0;
+}
+<h1 class="text-danger">Eliminar asignación</h1>
+<div class="alert alert-warning">¿Seguro que deseas eliminar esta asignación?</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID Asignación</dt>
+            <dd class="col-sm-9">@Model.EmpleadoProyectoId</dd>
+            <dt class="col-sm-3">Empleado</dt>
+            <dd class="col-sm-9">@Model.Empleado?.Nombre (@Model.EmpleadoId)</dd>
+            <dt class="col-sm-3">Fecha de asignación</dt>
+            <dd class="col-sm-9">@Model.FechaAsignacion:yyyy-MM-dd</dd>
+        </dl>
+    </div>
+</div>
+<form asp-action="Delete" asp-route-id="@Model.EmpleadoProyectoId" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+</form>
