@@ -19,8 +19,23 @@ namespace Gerencia.Presentacion.MVC.Controllers
         // GET: Proyecto
         public async Task<IActionResult> Index()
         {
-            var lista = await _api.GetAllAsync();
-            return View(new ProyectoIndexViewModel());
+            var  proyectosDto = await _api.GetAllAsync();
+
+            var proyectosVM = proyectosDto.Select(p => new ProyectoItemViewModel
+            {
+                Id = p.ProyectoId,
+                Nombre = p.Nombre,
+                FechaLimite = p.FechaLimite,
+            }).ToList();
+
+            var vm = new ProyectoIndexViewModel
+            {
+                Proyectos = proyectosVM
+            };
+
+            return View(vm);
+
+            //return View(new ProyectoIndexViewModel());
         }
 
         // GET: Proyecto/Details/5

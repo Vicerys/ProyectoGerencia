@@ -49,7 +49,10 @@ builder.Services.AddHttpClient<Gerencia.Presentacion.MVC.Services.Tarea_Api>((sp
     http.BaseAddress = new Uri(baseUrl);
 });
 
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -65,6 +68,7 @@ app.MapStaticAssets();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
+    //pattern: "{controller=Cuenta}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 

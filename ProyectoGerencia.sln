@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerencia.Servicios.JWT", "1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerencia.Presentacion.MVC", "Gerencia.Presentacion.MVC\Gerencia.Presentacion.MVC.csproj", "{9026274E-06EA-45C3-83A7-FC4579DEB2C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerencia_Movil", "..\..\Proyecto_Gerencia_Movil\Proyecto_Gerencia_Movil\Gerencia_Movil\Gerencia_Movil.csproj", "{2DD6323A-96B2-B831-3C46-1A50B51D2641}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,12 @@ Global
 		{9026274E-06EA-45C3-83A7-FC4579DEB2C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9026274E-06EA-45C3-83A7-FC4579DEB2C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9026274E-06EA-45C3-83A7-FC4579DEB2C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DD6323A-96B2-B831-3C46-1A50B51D2641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DD6323A-96B2-B831-3C46-1A50B51D2641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DD6323A-96B2-B831-3C46-1A50B51D2641}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2DD6323A-96B2-B831-3C46-1A50B51D2641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DD6323A-96B2-B831-3C46-1A50B51D2641}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DD6323A-96B2-B831-3C46-1A50B51D2641}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
